@@ -16,8 +16,14 @@ provider "aws" {
 resource "aws_instance" "app_server" {
   ami           = "ami-09d3b3274b6c5d4aa"
   instance_type = "t2.micro"
-
+  count = 3
+ 
   tags = {
-    Name = "MyAppServer"
+    Name = "MyAppServer-${count.index}"
   }
+}
+
+output app-ser-ip {
+  value       = ["${aws_instance.app_server.1.public_ip}"]
+
 }
